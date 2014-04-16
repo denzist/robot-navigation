@@ -17,7 +17,10 @@
 	roslaunch robot_teleop robot_teleop.launch 
 
 	визуализация в rviz 
-	roslaunch robot_description robot_rviz.launch 
+	roslaunch robot_description robot_rviz.launch
+	##UPDATE
+	для того чтобы запустить gazebo и управлять моделькой джойстиком
+		roslaunch robot_gazebo robot_teleop_wg.launch
 
 	##TODO
 	5)подключить navigation stack 
