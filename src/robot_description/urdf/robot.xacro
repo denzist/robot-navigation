@@ -176,7 +176,6 @@
 			<right_front_wheel_joint>right_front_wheel_joint</right_front_wheel_joint>
 			<right_rear_wheel_joint>right_rear_wheel_joint</right_rear_wheel_joint>
 			<wheel_separation>${base_width + wheel_length}</wheel_separation>
-			<updateRate>40.0</updateRate>
 		</plugin>
 	</gazebo>
 

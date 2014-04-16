@@ -1,4 +1,4 @@
-<launch>
+  <launch>
 
   <!-- these are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
@@ -25,6 +25,17 @@
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
 	args="-urdf -model robot -param robot_description -x 0 -y 0 -z 0.5"/>
+
+  <node name="tf_static_tr_pub" pkg="tf" type="static_transform_publisher"
+  args="0.1 0 0.1125 0 0 0  base_link hokuyo_laser 100"/>
+
+	<node respawn="true" pkg="joy"
+		type="joy_node" name="joy" >
+		<param name="dev" type="string" value="/dev/input/js1" />
+		<param name="autorepeat_rate" value="10" />
+	</node>
+
+	<node pkg="robot_teleop" type="robot_teleop" name="robot_teleop"/>
 
 
 </launch>

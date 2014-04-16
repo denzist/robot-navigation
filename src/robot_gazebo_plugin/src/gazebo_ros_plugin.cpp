@@ -12,6 +12,7 @@
 #include <tf/transform_broadcaster.h>
 
 #define NUM_JOINTS 4
+#define PI = 3.1415926535897931
 
 
 namespace gazebo
@@ -104,7 +105,7 @@ namespace gazebo
       if (_sdf->HasElement("wheel_radius"))
         this->wheel_radius = _sdf->GetElement("wheel_radius")->GetValueDouble();
 
-      this->torque = 20.0;
+      this->torque = 10.0;
       if (_sdf->HasElement("torque"))
         this->torque = _sdf->GetElement("torque")->GetValueDouble();
 
@@ -187,7 +188,7 @@ namespace gazebo
       this->robot_pose_th += this->robot_vth * dt;
 
       publishOdom(current_time);
-      publishTF(current_time);
+      //publishTF(current_time);
       publishJointStates(current_time);
 
     }
@@ -195,8 +196,8 @@ namespace gazebo
     void ROSCmdVelCallback(const geometry_msgs::Twist &msg)
     {
 
-      gzmsg << "cmd_vel: " << msg.linear.x << ", "
-         << msg.angular.z << std::endl;
+     // gzmsg << "cmd_vel: " << msg.linear.x << ", "
+     //    << msg.angular.z << std::endl;
       this->last_cmd_vel_time = this->world->GetSimTime();
       double vl = msg.linear.x;
       double va= msg.angular.z;
@@ -239,8 +240,10 @@ namespace gazebo
     void publishTF(common::Time &current_time)
     {
       geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(this->robot_pose_th);
-
+      geometry_msgs::Quaternion laser_quat = tf::createQuaternionMsgFromYaw(0.0);
       geometry_msgs::TransformStamped odom_trans;
+      geometry_msgs::TransformStamped laser_trans;
+
       odom_trans.header.stamp.sec = current_time.sec;
       odom_trans.header.stamp.nsec = current_time.nsec;
       odom_trans.header.frame_id = "odom";
@@ -251,8 +254,19 @@ namespace gazebo
       odom_trans.transform.translation.z = 0.0;
       odom_trans.transform.rotation = odom_quat;
 
-      //publish odom
+      laser_trans.header.stamp.sec = current_time.sec;
+      laser_trans.header.stamp.nsec = current_time.nsec;
+      laser_trans.header.frame_id = "base_link";
+      laser_trans.child_frame_id = "hokuyo_link";
+
+      laser_trans.transform.translation.x = base_length/2 - base_length/4;
+      laser_trans.transform.translation.y = 0.0;
+      laser_trans.transform.translation.z = base_hight/2 + 0.05;
+      laser_trans.transform.rotation = laser_quat;
+
+      //publish tf
       this->odom_broadcaster.sendTransform(odom_trans);
+      this->odom_broadcaster.sendTransform(laser_trans);
     }
 
 
@@ -281,6 +295,9 @@ namespace gazebo
     private: tf::TransformBroadcaster odom_broadcaster;
     private: ros::Publisher joint_state_pub;
     private: ros::Subscriber cmd_vel_sub;
+    //ROS publish rate
+    //private: ros::Rate rate = ros::Rate(100);
+
 
     private: std::string robot_namespace;
 
@@ -325,6 +342,10 @@ namespace gazebo
     ///robot speed
     private: double robot_linear_speed;
     private: double robot_angular_speed;
+
+    private: double base_hight = 0.125;
+    private: double base_width = 0.3;
+    private: double base_length = 0.4;
 
 
     private: sensor_msgs::JointState joint_states;
