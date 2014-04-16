@@ -104,7 +104,7 @@ namespace gazebo
       if (_sdf->HasElement("wheel_radius"))
         this->wheel_radius = _sdf->GetElement("wheel_radius")->GetValueDouble();
 
-      this->torque = 4.0;
+      this->torque = 20.0;
       if (_sdf->HasElement("torque"))
         this->torque = _sdf->GetElement("torque")->GetValueDouble();
 
@@ -117,7 +117,7 @@ namespace gazebo
       this->node = new ros::NodeHandle("~");
 
       // ROS Subscriber and Publishers
-      this->cmd_vel_sub = this->node->subscribe("cmd_vel", 1,
+      this->cmd_vel_sub = this->node->subscribe(this->cmd_vel_topic_name, 1,
         &GazeboRosPlugin::ROSCmdVelCallback, this);
       this->odom_pub = this->node->advertise<nav_msgs::Odometry>(this->odom_topic_name, 1);
       this->joint_state_pub = this->node->advertise<sensor_msgs::JointState>(this->joint_states_topic_name, 1);
@@ -187,6 +187,7 @@ namespace gazebo
       this->robot_pose_th += this->robot_vth * dt;
 
       publishOdom(current_time);
+      publishTF(current_time);
       publishJointStates(current_time);
 
     }
@@ -234,6 +235,27 @@ namespace gazebo
       this->odom_pub.publish(odom);
     }
 
+
+    void publishTF(common::Time &current_time)
+    {
+      geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(this->robot_pose_th);
+
+      geometry_msgs::TransformStamped odom_trans;
+      odom_trans.header.stamp.sec = current_time.sec;
+      odom_trans.header.stamp.nsec = current_time.nsec;
+      odom_trans.header.frame_id = "odom";
+      odom_trans.child_frame_id = "base_link";
+
+      odom_trans.transform.translation.x = robot_pose_x;
+      odom_trans.transform.translation.y = robot_pose_y;
+      odom_trans.transform.translation.z = 0.0;
+      odom_trans.transform.rotation = odom_quat;
+
+      //publish odom
+      this->odom_broadcaster.sendTransform(odom_trans);
+    }
+
+
     void publishJointStates(common::Time &current_time)
     {
       this->joint_states.header.stamp.sec = current_time.sec;
@@ -256,13 +278,14 @@ namespace gazebo
 
     // ROS Subscribers and Publishers
     private: ros::Publisher odom_pub;
+    private: tf::TransformBroadcaster odom_broadcaster;
     private: ros::Publisher joint_state_pub;
     private: ros::Subscriber cmd_vel_sub;
 
     private: std::string robot_namespace;
 
     private: std::string cmd_vel_topic_name;
-    private: std::string odom_topic_name;
+    private: std::string odom_topic_name; 
     private: std::string joint_states_topic_name;
 
     private: double wheel_sep;

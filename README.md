@@ -18,7 +18,6 @@ roslaunch robot_teleop robot_teleop.launch
 
 визуализация в rviz 
 roslaunch robot_description robot_rviz.launch 
-///есть некоторые проблемы с поворачиваемостью - я как мог пытался подбирать коэффициенты трения
 
 ///TODO
 5)подключить navigation stack 

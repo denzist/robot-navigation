@@ -9,7 +9,7 @@
 	<xacro:property name="base_length" value="0.4"/>
 	<xacro:property name="base_Ix" value="${base_mass*(base_hight*base_hight+base_width*base_width)/12}"/>
 	<xacro:property name="base_Iy" value="${base_mass*(base_length*base_length+base_hight*base_hight)/12}"/>
-	<xacro:property name="base_Iz" value="${base_mass*(base_length*base_length+base_width*base_width)/12}"/>
+	<xacro:property name="base_Iz" value="${base_mass*(base_length*base_length+base_width*base_width)/12 * 0.5}"/>
 
 	
 	<xacro:property name="wheel_radius" value="0.1"/>
@@ -66,8 +66,8 @@
 		</link>
 
 		<gazebo reference="{prefix}_wheel">
-			<mu1 value="10"/>
-			<mu2 value="0.5"/>
+			<mu1 value="0.8"/>
+			<mu2 value="0.8"/>
 			<fdir value="1 0 0"/>
 			<material>Gazebo/Black</material>
 		</gazebo>
@@ -91,14 +91,30 @@
 	
 	<xacro:wheel prefix="left_rear" xyz_offsets="-${base_length/2} -${(base_width+wheel_length)/2} -${base_hight/4}"/>
 
+	<gazebo reference="base_link">
+		<material>Gazebo/Blue</material>
+	</gazebo>
+	<gazebo reference="right_front_wheel">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	<gazebo reference="right_rear_wheel">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	<gazebo reference="left_front_wheel">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	<gazebo reference="left_rear_wheel">
+		<material>Gazebo/Black</material>
+	</gazebo>
 
+	<!-- Hokuyo Laser -->
 	<joint name="hokuyo_joint" type="fixed">
 		<origin xyz="${base_length/2 - base_length/4} 0 ${base_hight/2 + 0.05}" rpy="0 0 0"/>
 		<parent link="base_link"/>
 		<child link="hokuyo_link"/>
 	</joint>
 
-	<!-- Hokuyo Laser -->
+
 	<link name="hokuyo_link">
 		<collision>
 			<geometry>
@@ -117,23 +133,6 @@
 			<inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
 		</inertial>
 	</link>
-
-
-	<gazebo reference="base_link">
-		<material>Gazebo/Blue</material>
-	</gazebo>
-	<gazebo reference="right_front_wheel">
-		<material>Gazebo/Black</material>
-	</gazebo>
-	<gazebo reference="right_rear_wheel">
-		<material>Gazebo/Black</material>
-	</gazebo>
-	<gazebo reference="left_front_wheel">
-		<material>Gazebo/Black</material>
-	</gazebo>
-	<gazebo reference="left_rear_wheel">
-		<material>Gazebo/Black</material>
-	</gazebo>
 
 	<gazebo reference="hokuyo_link">
 		<sensor name="head_hokuyo_sensor" type="gpu_ray">
@@ -160,7 +159,7 @@
 				</noise>
 			</ray>
 			<plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_head_hokuyo_controller">
-				<topicName>/robot/laser/scan</topicName>
+				<topicName>/gazebo/laser_scan</topicName>
 				<frameName>hokuyo_link</frameName>
 			</plugin>
 		</sensor>

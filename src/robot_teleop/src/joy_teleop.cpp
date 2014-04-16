@@ -27,7 +27,7 @@ RobotJoyTeleop::RobotJoyTeleop()
 {
 
   this->node.param("max_vel_x", this->max_vel_x,1.0);
-  this->node.param("max_rotational_vel", this->max_rotational_vel,5.0);
+  this->node.param("max_rotational_vel", this->max_rotational_vel,1.0);
 
 
   this->vel_pub = this->node.advertise<geometry_msgs::Twist>("/gazebo/cmd_vel", 1);
