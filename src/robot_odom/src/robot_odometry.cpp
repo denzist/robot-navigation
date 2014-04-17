@@ -40,9 +40,8 @@ int main(int argc, char** argv){
 
   ros::NodeHandle n;
   ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
-  tf::TransformBroadcaster odom_broadcaster;
 
-  ros::Subscriber joint_subscriber = n.subscribe("/joint_states", 1, jointStatesCallback);
+  ros::Subscriber joint_subscriber = n.subscribe("/gazebo/joint_states", 1, jointStatesCallback);
 
   
   wheel_speed.assign(4, 0.0);
@@ -77,20 +76,6 @@ int main(int argc, char** argv){
     //since all odometry is 6DOF we'll need a quaternion created from yaw
     geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(robot_pose_th);
 
-    //first, we'll publish the transform over tf
-    geometry_msgs::TransformStamped odom_trans;
-    odom_trans.header.stamp = current_time;
-    odom_trans.header.frame_id = "odom";
-    odom_trans.child_frame_id = "base_link";
-
-    odom_trans.transform.translation.x = robot_pose_x;
-    odom_trans.transform.translation.y = robot_pose_y;
-    odom_trans.transform.translation.z = 0.0;
-    odom_trans.transform.rotation = odom_quat;
-
-    //send the transform
-    odom_broadcaster.sendTransform(odom_trans);
-
     //next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;
     odom.header.stamp = current_time;
@@ -107,6 +92,9 @@ int main(int argc, char** argv){
     odom.twist.twist.linear.x = robot_vx;
     odom.twist.twist.linear.y = robot_vy;
     odom.twist.twist.angular.z = robot_vth;
+
+    for(int i = 0; i < 6; i++)
+        odom.pose.covariance[i*6+i] = 0.1;
 
     //publish the message
     odom_pub.publish(odom);

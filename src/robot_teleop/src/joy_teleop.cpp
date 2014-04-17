@@ -51,7 +51,7 @@ void RobotJoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
   // check if cross is used for steering
     vel.linear.x = max_vel_x * joy->axes[1] * speed_multiplier;
-    vel.angular.z = max_rotational_vel * joy->axes[0] * speed_multiplier;
+    vel.angular.z = (-1)*max_rotational_vel * joy->axes[0] * speed_multiplier;
   vel_pub.publish(vel);
 
 }

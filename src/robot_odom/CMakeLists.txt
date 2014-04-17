@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf
 )
 
+catkin_package()
+
 add_executable(robot_odom src/robot_odometry.cpp)
 
 target_link_libraries(robot_odom ${catkin_LIBRARIES})

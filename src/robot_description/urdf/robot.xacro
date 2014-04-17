@@ -18,6 +18,18 @@
 	<xacro:property name="wheel_Iz" value="${wheel_mass*wheel_radius*wheel_radius/2}"/>
 	<xacro:property name="wheel_Ix" value="${wheel_mass*(3*wheel_radius*wheel_radius+wheel_length*wheel_length)/12}"/>
 
+	<joint name="base_footprint_joint" type="fixed">
+    	<axis xyz="0 0 0"/> 
+    	<origin xyz="0.0 0.0 0.0"/>
+    	<parent link="base_footprint"/>
+    	<child link="base_link"/>
+ 	</joint>
+
+
+ 	<link name="base_footprint">
+ 	</link>
+
+
 	<!-- base of robot-->
 	<xacro:macro name="base_link">
 		<link name="base_link">
@@ -197,6 +209,41 @@
 	<xacro:trans prefix="left_front"/>
 	
 	<xacro:trans prefix="left_back"/>
+
+
+	<joint name="imu_joint" type="fixed">
+    	<axis xyz="0 0 0"/> 
+    	<origin xyz="0.0 0.0 0.0"/>
+    	<parent link="base_link"/>
+    	<child link="imu_link"/>
+ 	</joint>
+
+
+ 	<link name="imu_link">
+ 		<inertial>
+ 			<mass value="0.001"/>
+ 			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+ 			<inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+ 		</inertial>
+ 		<collision>
+ 			<origin rpy="0 0 0" xyz="0 0 0"/>
+ 			<geometry>
+ 				<box size=".001 .001 .001"/>
+ 			</geometry>
+ 		</collision>
+ 	</link>
+
+ 	<gazebo>
+ 		<plugin filename="libgazebo_ros_imu.so" name="imu_en_ros">
+ 			<alwaysOn>true</alwaysOn>
+ 			<updateRate>100.0</updateRate> 
+ 			<bodyName>imu_link</bodyName>
+ 			<topicName>imu_data</topicName>
+ 			<gaussianNoise>2.89e-08</gaussianNoise>
+ 			<xyzOffset>0.0 0.0 0.0</xyzOffset>
+ 			<rpyOffset>0.0 0.0 0.0</rpyOffset>
+ 		</plugin>
+ 	</gazebo>
 
 </robot>
 

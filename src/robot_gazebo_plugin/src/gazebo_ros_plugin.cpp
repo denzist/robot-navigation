@@ -120,7 +120,7 @@ namespace gazebo
       // ROS Subscriber and Publishers
       this->cmd_vel_sub = this->node->subscribe(this->cmd_vel_topic_name, 1,
         &GazeboRosPlugin::ROSCmdVelCallback, this);
-      this->odom_pub = this->node->advertise<nav_msgs::Odometry>(this->odom_topic_name, 1);
+      //this->odom_pub = this->node->advertise<nav_msgs::Odometry>(this->odom_topic_name, 1);
       this->joint_state_pub = this->node->advertise<sensor_msgs::JointState>(this->joint_states_topic_name, 1);
 
 
@@ -176,7 +176,7 @@ namespace gazebo
       // turn right wheels
       this->joints[2]->SetVelocity(0, this->wheel_speed_right / this->wheel_radius);
       this->joints[3]->SetVelocity(0, this->wheel_speed_right / this->wheel_radius);
-
+/*
       //estimate odom
       this->robot_vx = this->robot_linear_speed * cos(this->robot_pose_th);
       this->robot_vy = this->robot_linear_speed * sin(this->robot_pose_th);
@@ -186,8 +186,8 @@ namespace gazebo
       this->robot_pose_x += this->robot_vx * dt;
       this->robot_pose_y += this->robot_vy * dt;
       this->robot_pose_th += this->robot_vth * dt;
-
-      publishOdom(current_time);
+*/
+      //publishOdom(current_time);
       //publishTF(current_time);
       publishJointStates(current_time);
 
@@ -219,6 +219,7 @@ namespace gazebo
       odom.header.stamp.sec = current_time.sec;
       odom.header.stamp.nsec = current_time.nsec;
       odom.header.frame_id = "odom";
+      odom.child_frame_id = "base_link";
 
       //set the position
       odom.pose.pose.position.x = this->robot_pose_x;
@@ -227,7 +228,6 @@ namespace gazebo
       odom.pose.pose.orientation = odom_quat;
 
       //set the velocity
-      odom.child_frame_id = "base_link";
       odom.twist.twist.linear.x = this->robot_vx;
       odom.twist.twist.linear.y = this->robot_vy;
       odom.twist.twist.angular.z = this->robot_vth;
@@ -236,7 +236,7 @@ namespace gazebo
       this->odom_pub.publish(odom);
     }
 
-
+/*
     void publishTF(common::Time &current_time)
     {
       geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(this->robot_pose_th);
@@ -268,7 +268,7 @@ namespace gazebo
       this->odom_broadcaster.sendTransform(odom_trans);
       this->odom_broadcaster.sendTransform(laser_trans);
     }
-
+*/
 
     void publishJointStates(common::Time &current_time)
     {
@@ -292,7 +292,6 @@ namespace gazebo
 
     // ROS Subscribers and Publishers
     private: ros::Publisher odom_pub;
-    private: tf::TransformBroadcaster odom_broadcaster;
     private: ros::Publisher joint_state_pub;
     private: ros::Subscriber cmd_vel_sub;
     //ROS publish rate
