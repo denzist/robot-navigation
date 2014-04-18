@@ -342,11 +342,6 @@ namespace gazebo
     private: double robot_linear_speed;
     private: double robot_angular_speed;
 
-    private: double base_hight = 0.125;
-    private: double base_width = 0.3;
-    private: double base_length = 0.4;
-
-
     private: sensor_msgs::JointState joint_states;
   };
 
