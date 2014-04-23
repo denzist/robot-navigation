@@ -64,7 +64,7 @@ namespace gazebo
       if (_sdf->HasElement("odom_topic_name"))
         this->odom_topic_name = _sdf->GetElement("odom_topic_name")->GetValueString();
 
-      this->joint_states_topic_name = "/joint_states";
+      this->joint_states_topic_name = "joint_states";
       if (_sdf->HasElement("joint_states_topic_name"))
         this->joint_states_topic_name = _sdf->GetElement("joint_states_topic_name")->GetValueString();
 

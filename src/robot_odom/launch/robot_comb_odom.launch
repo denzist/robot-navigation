@@ -1,4 +1,8 @@
  <launch>
+
+
+  <!-- Odom publisher-->
+  <node name="odom_publ" pkg="robot_odom" type="robot_odom"/>
  
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom_combined"/>

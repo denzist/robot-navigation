@@ -5,5 +5,5 @@ footprint: [[0.5, 0.5], [-0.5, 0.5], [-0.5, -0.5], [0.5, -0.5]]
 inflation_radius: 0.71
 
 observation_sources: gazebo_laser_scan_sensor
-gazebo_laser_scan_sensor: {sensor_frame: /hokuyo_link, data_type: LaserScan, topic: /robot/laser/scan, marking: true, clearing: true}
+gazebo_laser_scan_sensor: {sensor_frame: /hokuyo_link, data_type: LaserScan, topic: /gazebo/laser_scan, marking: true, clearing: true}
 

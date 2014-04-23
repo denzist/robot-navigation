@@ -26,6 +26,10 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
 	args="-urdf -model robot -param robot_description -x 0 -y 0 -z 0.5"/>
 
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" >
+      <remap from="joint_states" to="/gazebo/joint_states" />
+  </node>
+
 	<node respawn="true" pkg="joy"
 		type="joy_node" name="joy" >
 		<param name="dev" type="string" value="/dev/input/js1" />
@@ -33,20 +37,6 @@
 	</node>
 
 	<node pkg="robot_teleop" type="robot_teleop" name="robot_teleop"/>
-
-  <!--TF transforms-->
-
-  <node pkg="tf" type="static_transform_publisher" name="footprint_transform_pub"
-   args="0 0 0 0 0 0 1 base_footprint base_link 100 " />
-
-  <node name="laser_transform_pub" pkg="tf" type="static_transform_publisher"
-  args="0.1 0 0.1125 0 0 0  base_link hokuyo_link 100"/>
-
-  <node pkg="tf" type="static_transform_publisher" name="imu_transform_pub"
-   args="0 0 0 0 0 0 1 base_link imu_link 100 " />
-
-   <!-- Odom publisher-->
-  <node name="odom_publ" pkg="robot_odom" type="robot_odom"/>
 
 
 </launch>
