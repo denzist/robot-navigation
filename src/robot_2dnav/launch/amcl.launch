@@ -2,8 +2,6 @@
 <launch>
   <master auto="start"/>
 
-  <!--node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 /map /odom_combined 100"/-->
-
   <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(find robot_2dnav)/map/map.yaml"/>
 

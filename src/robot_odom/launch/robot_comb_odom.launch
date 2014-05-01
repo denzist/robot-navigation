@@ -3,6 +3,8 @@
 
   <!-- Odom publisher-->
   <node name="odom_publ" pkg="robot_odom" type="robot_odom"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_broadcaster" args="0 0 0 0 0 0 base_footprint base_link 100" />
  
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom_combined"/>

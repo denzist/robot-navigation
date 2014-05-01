@@ -17,3 +17,8 @@ catkin_package()
 add_executable(robot_odom src/robot_odometry.cpp)
 
 target_link_libraries(robot_odom ${catkin_LIBRARIES})
+
+
+add_executable(robot_raw_odom src/robot_raw_odometry.cpp)
+
+target_link_libraries(robot_raw_odom ${catkin_LIBRARIES})

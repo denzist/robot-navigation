@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+ <launch>
+  <!-- Odom publisher-->
+  <node name="raw_odom_publ" pkg="robot_odom" type="robot_raw_odom"/>
+</launch>

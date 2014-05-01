@@ -7,6 +7,5 @@
     <param name="autorepeat_rate" value="10" />
   </node>
 
-  <node pkg="robot_teleop" type="robot_teleop" name="robot_teleop"/>
-
+  <node pkg="robot_teleop" type="robot_teleop" name="robot_teleop" output="screen"/>
 </launch>

@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <launch>
   <master auto="start"/>
-
-  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 /map /odom_combined 100"/>
-
   <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(find robot_2dnav)/map/map.yaml"/>
 
@@ -25,14 +22,16 @@
         <param name="base_frame_id" value="/base_link"/>
         <param name="global_frame_id" value="/map"/>
 
-    </node>
+  </node>
 
-  <node name="cmd_vel_gazebo_pub" pkg="robot_2dnav" type="cmd_vel_pub"/>
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <remap from="cmd_vel" to="/gazebo/cmd_vel" />
+    <remap from="scan" to="/gazebo/laser_scan" />
     <rosparam file="$(find robot_2dnav)/nav_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find robot_2dnav)/nav_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find robot_2dnav)/nav_config/local_costmap.yaml" command="load" />
     <rosparam file="$(find robot_2dnav)/nav_config/global_costmap.yaml" command="load" />
     <rosparam file="$(find robot_2dnav)/nav_config/base_local_planner.yaml" command="load" />
+
   </node>
 </launch>
