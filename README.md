@@ -1,7 +1,10 @@
 What was done:
 	1)4 wheeled robot simulation - urdf description; gazebo controller //
+	
 	2)joy teleoperating //
+	
 	3)odometry calculating //
+	
 	3)2d navigation demo through face_localization and base_local_controller //
 	
 //TODO
