@@ -9,6 +9,7 @@ What was done:
 	3)2d navigation demo through face_localization and base_local_controller //
 	
 //TODO
+
 	Add module which provides service for returning robot into init pose when joy teleoparation turns off//
 
 //HOW TO RUN
