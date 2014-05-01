@@ -1,32 +1,26 @@
-Что сейчас сделано:
+What was done:
+	1)4 wheeled robot simulation - urdf description; gazebo controller //
+	2)joy teleoperating //
+	3)odometry calculating //
+	3)2d navigation demo through face_localization and base_local_controller //
+	
+//TODO
+	Add module which provides service for returning robot into init pose when joy teleoparation turns off//
 
-	1)Простенькая моделька 4 колесного робота ( она пока что не так хороша, пока что она существует только для того, чтобы 	через gazebo я мог получать фейковые данные лазера)
-	2) tf_broadcaster - нужен только для того, чтобы данные лазера из локальной оси координат этого лазера, переводить их в координаты base_link - координаты робота, возможно вообще не понадобиться или сольется с чем-то другим
-	3) robot_odom - получая данные из joint-ов колес, конвертирую их в одометрические данные робота (позиция и скорость), а затем помещаю в топик odom и tf, чтобы затем их использовать для навигации
-	4) застрял на написании base controller
-
-	##Update
-	4)robot_gazebo_plugin - плагин для управления колесами робота в симляции
-	5)robot_teleop - управление роботом через джойстик
-	//собрать репозиторий
-	cd "rep"
-	catkin_make
-	source "rep"/devel/setup.bash
-
-	roslaunch robot_gazebo robot.launch 
-	roslaunch robot_teleop robot_teleop.launch 
-
-	визуализация в rviz 
-	roslaunch robot_description robot_rviz.launch
-	##UPDATE
-	для того чтобы запустить gazebo и управлять моделькой джойстиком
-		roslaunch robot_gazebo robot_teleop_wg.launch
-
-	##TODO
-	5)подключить navigation stack 
-		##сдалана карта части willow garage world
-		##создание карты в режиме онлайн с включенным gazebo и rviz - трудоемкая задача для моего компа
-		##поэтому работало все достаточно медленно
-		##TODO 
-		##попробовать в действии amcl
-	6)написать программку, которая при завершении комманд с cmd_vel подключает navigation stack(например в автономном режиме возращает его в место инициализации)
+//HOW TO RUN
+	To run demo make following commands
+	**if updated project
+	1)delete build and devel diractories
+	in bash
+	$ cd $(prokect_name)
+	$ catkin_make
+	reopen the bash
+	** for 2dnav
+	$ roslaunch robot_gazebo willow_garage.launch 
+	$ roslaunch robot_description 2dnav.launch
+	$ roslaunch robot_2dnav move_base_demo.launch
+	** in rviz use button *navigation goal* to send the goal
+	** for joy teleoparating
+	$ roslaunch robot_gazebo willow_garage_teleop.launch
+	or
+	$ roslaunch robot_gazebo empty_world_teleop.launch
