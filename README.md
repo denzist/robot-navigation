@@ -45,3 +45,9 @@ What was done:
 	or
 	
 	$ roslaunch robot_gazebo empty_world_teleop.launch
+	** keyboard teleoparation
+	$ roslaunch robot_gazebo willow_garage.launch
+	$ roslaunch robot_teleop keyboard_teleop.launch
+	or
+	$ roslaunch robot_gazebo empty_world_teleop.launch
+	$ roslaunch robot_teleop keyboard_teleop.launch
