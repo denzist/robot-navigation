@@ -2,6 +2,8 @@
 #include <sensor_msgs/Joy.h>
 #include <pluginlib/class_list_macros.h>
 #include <geometry_msgs/Twist.h>
+#include <ros/time.h>
+#include <std_msgs/Int32.h>
 
 
 class RobotJoyTeleop
@@ -19,6 +21,7 @@ private:
   std::string cmd_topic;
 
   ros::Publisher vel_pub;
+  ros::Publisher verification_pub;
   ros::Subscriber joy_sub;
   
 };
@@ -47,6 +50,8 @@ RobotJoyTeleop::RobotJoyTeleop()
 
   this->joy_sub = this->node.subscribe<sensor_msgs::Joy>("joy", 10, &RobotJoyTeleop::joyCallback, this);
 
+  this->verification_pub = this->node.advertise<std_msgs::Int32>("/teleop_veification", 1);
+
 }
 
 void RobotJoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
@@ -58,6 +63,9 @@ void RobotJoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   vel.angular.z = max_rotational_vel * joy->axes[0] * speed_multiplier;
   vel_pub.publish(vel);
 
+  std_msgs::Int32 msg;
+  msg.data = 1;
+  this->verification_pub.publish(msg);
 }
 
 

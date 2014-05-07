@@ -22,7 +22,7 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
 	args="-urdf -model robot -param robot_description -x 0 -y 0 -z 0.5"/>
 
-	<include file="$(find robot_teleop)/launch/robot_teleop.launch"/>
+	<include file="$(find robot_teleop)/launch/joy_teleop.launch"/>
 
   <include file="$(find robot_odom)/launch/robot_comb_odom.launch"/>
 

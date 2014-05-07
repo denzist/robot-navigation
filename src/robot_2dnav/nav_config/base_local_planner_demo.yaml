@@ -12,10 +12,10 @@ TrajectoryPlannerROS:
    pdist_scale: 0.5
    gdist_scale: 0.8
    global_frame_id: odom_combined
-   meter_scoring: true
+   meter_scoring: false
    dwa: true
 
    vx_samples: 10
-   yaw_goal_tolerance: 3.1415926535897931
-   xy_goal_tolerance: 0.30
+   yaw_goal_tolerance: 0.20
+   xy_goal_tolerance: 0.20
    latch_xy_goal_tolerance: false

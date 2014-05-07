@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="robot_2dnav" type="teleop_tracker" name="teleop_tracker" output="screen"/>
+  <node pkg="robot_2dnav" type="goal_controller" name="goal_controller" output="screen"/>
+</launch>

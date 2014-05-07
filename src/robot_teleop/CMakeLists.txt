@@ -6,9 +6,11 @@ project(robot_teleop)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
+  nav_msgs
   roscpp
   sensor_msgs
   joy
+  std_msgs
 )
 
 catkin_package()
@@ -17,4 +19,3 @@ add_executable(robot_teleop src/joy_teleop.cpp)
 
 target_link_libraries(robot_teleop ${catkin_LIBRARIES})
 
-##rosbuild_add_executable(robot_teleop ${PROJECT_SOURCE_DIR}/src/joy_teleop.cpp)

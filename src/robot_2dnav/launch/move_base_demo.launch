@@ -18,7 +18,6 @@
     <rosparam file="$(find robot_2dnav)/nav_config/costmap_common_params_demo.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find robot_2dnav)/nav_config/local_costmap_demo.yaml" command="load" />
     <rosparam file="$(find robot_2dnav)/nav_config/global_costmap_demo.yaml" command="load" />
-    <rosparam file="$(find robot_2dnav)/nav_config/base_local_planner.yaml" command="load" />
-
+    <rosparam file="$(find robot_2dnav)/nav_config/base_local_planner_demo.yaml" command="load" />
   </node>
 </launch>
