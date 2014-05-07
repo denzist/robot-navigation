@@ -12,9 +12,13 @@ What was done:
 	
 	
 //HOW TO RUN
+
 	To run emergency move base controller(with joy teleop only)
+	
 	$ roslaunch robot_gazebo willow_garage_teleop.launch
+	
 	$ roslaunch robot_description 2dnav.launch
+	
 	$ roslaunch robot_2dnav emergency_move_base.launch
 
 	To run demo make following commands
