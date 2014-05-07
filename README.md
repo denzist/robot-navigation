@@ -16,7 +16,7 @@ What was done:
 
 	To run emergency move base controller
 	
-	(with joy teleop only)
+	(with joy teleop)
 	
 	$ roslaunch robot_gazebo willow_garage_teleop.launch
 	$ roslaunch robot_description 2dnav.launch
