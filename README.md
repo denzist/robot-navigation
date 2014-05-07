@@ -7,12 +7,15 @@ What was done:
 	3)odometry calculating //
 	
 	3)2d navigation demo through face_localization and base_local_controller //
+	//NEW
+	4)added emergency move base controller
 	
-//TODO
-
-	Add module which provides service for returning robot into init pose when joy teleoparation turns off//
-
+	
 //HOW TO RUN
+	To run emergency move base controller(with joy teleop only)
+	$ roslaunch robot_gazebo willow_garage_teleop.launch
+	$ roslaunch robot_description 2dnav.launch
+	$ roslaunch robot_2dnav emergency_move_base.launch
 
 	To run demo make following commands
 	
@@ -51,3 +54,4 @@ What was done:
 	or
 	$ roslaunch robot_gazebo empty_world_teleop.launch
 	$ roslaunch robot_teleop keyboard_teleop.launch
+	
