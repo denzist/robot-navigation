@@ -30,7 +30,8 @@ What was done:
 	
 	How it works.
 	If you turned off your joy(just pull it out USB)  or keyboard_teleop(to turn it off press ctrl+C twice)
-	move base would go into emergency mode and will move to init point. If you turned on joy and keyboard_teleop again, robot would 	be under teleop control. 
+	move base would go into emergency mode and will move to init point. If you turned on joy and keyboard_teleop again,
+	robot would be under teleop control. 
 	
 	To run demo make following commands
 	
