@@ -19,3 +19,7 @@ add_executable(robot_teleop src/joy_teleop.cpp)
 
 target_link_libraries(robot_teleop ${catkin_LIBRARIES})
 
+add_executable(simple_verification_publisher src/simple_verification_publisher.cpp)
+
+target_link_libraries(simple_verification_publisher ${catkin_LIBRARIES})
+
