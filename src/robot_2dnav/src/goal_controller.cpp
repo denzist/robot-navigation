@@ -86,10 +86,13 @@ void EmergencyMove(MoveBaseClient &ac){
     }
   }else{
     //if teleop tracker sended inactive state
-    if(current_goal.status != _INACTIVE){
+    if(current_goal.status == _ACTIVE){
       ROS_INFO("Aborting current goal");
       ac.cancelGoal();
-      std_msgs::Int32 msg;
+      current_goal.status = _INACTIVE;
+    }
+    if(current_goal.status == _SUCCEEDED || current_goal.status == _ABORTED){
+      ac.cancelGoal();
       current_goal.status = _INACTIVE;
     }
   }

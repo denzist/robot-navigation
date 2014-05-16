@@ -49,26 +49,44 @@ void CmdVelCallback(){
     //collecting longway points
     if(transform_v.empty()){
       transform_v.push_back(current_transform);
-      return;
-    }
-    if(transform_v.size() == 1){
-      transform_v.push_back(current_transform);
+      ROS_INFO("The queue was empty. Added goal x=%f y=%f z=%f ",current_transform.getOrigin().x(), 
+            current_transform.getOrigin().y(), current_transform.getOrigin().z());
       return;
     }
     int last_i = transform_v.size() - 1;
     double d1 = Distance(current_transform, transform_v[last_i]);
-    double d2 = Distance(current_transform, transform_v[last_i - 1]);
-    if(d1 >= 10.0 && d2 >= 10.0){
+    if(transform_v.size() == 1 && d1 >= 10.0){
       transform_v.push_back(current_transform);
+      ROS_INFO("The queue had 1 element. Added goal x=%f y=%f z=%f ",current_transform.getOrigin().x(), 
+            current_transform.getOrigin().y(), current_transform.getOrigin().z());
       return;
     }
-    if(d1 >= 10.0 && d2 <= 10.0){
-      transform_v[last_i] = current_transform;
-      return;
+    if(transform_v.size() >= 2){
+    	double d2 = Distance(current_transform, transform_v[last_i - 1]);
+    	if(d1 >= 10.0 && d2 >= 10.0){
+      		transform_v.push_back(current_transform);
+      		ROS_INFO("Added new goal x=%f y=%f z=%f ",current_transform.getOrigin().x(), 
+            	current_transform.getOrigin().y(), current_transform.getOrigin().z());
+      		return;
+    	}
+    	if(d1 >= 10.0 && d2 <= 10.0){
+      		transform_v[last_i] = current_transform;
+      		ROS_INFO("Current position is closer than queue last position. Replaced with goal x=%f y=%f z=%f ",current_transform.getOrigin().x(), 
+            	current_transform.getOrigin().y(), current_transform.getOrigin().z());
+      		return;
+    	}
+    	if(d1 <= 10.0 && d2 <=10.0){
+    		transform_v.pop_back();
+    		ROS_INFO("Current position is closer than queue last position. Deleting last goal x=%f y=%f z=%f ",transform_v.back().getOrigin().x(), 
+            transform_v.back().getOrigin().y(), transform_v.back().getOrigin().z());
+    		return;
+    	}
     }
+    return;
   }else{
   //if teleoparating turned off
     //send active state to goal controller
+    if(transform_v.size() != 0){
     if(goal_status == _INACTIVE){
       robot_msgs::Goal goal;
       goal.status = _ACTIVE;
@@ -90,6 +108,7 @@ void CmdVelCallback(){
       goal_pub.publish(goal);
       return;
     }
+	}
     //if current goal is still active
     return;
   }

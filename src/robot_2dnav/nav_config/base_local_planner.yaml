@@ -17,5 +17,5 @@ TrajectoryPlannerROS:
 
    vx_samples: 10
    yaw_goal_tolerance: 3.1415926535897931
-   xy_goal_tolerance: 0.30
+   xy_goal_tolerance: 0.5
    latch_xy_goal_tolerance: false
