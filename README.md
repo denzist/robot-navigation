@@ -1,3 +1,5 @@
+### DESCRIPTION
+
 What was done:
 
 	1)4 wheeled robot simulation - urdf description; gazebo controller //
@@ -12,7 +14,7 @@ What was done:
 	4)added emergency move base controller
 	
 	
-//HOW TO RUN
+### HOW TO RUN
 
 	To run emergency move base controller
 	
@@ -29,7 +31,7 @@ What was done:
 	$ roslaunch robot_2dnav emergency_move_base.launch
 	
 	How it works.
-	If you turned off your joy(just pull it out USB)  or keyboard_teleop(to turn it off press ctrl+C twice)
+	If you turned off your joy(just pull it out USB) or keyboard_teleop(to turn it off press ctrl+C twice)
 	move base would go into emergency mode and will move to init point. If you turned on joy and keyboard_teleop again,
 	robot would be under teleop control. 
 	
@@ -54,7 +56,7 @@ What was done:
 	
 	** in rviz use button *navigation goal* to send the goal
 	
-	** for joy teleoparating
+	** for joy teleoperating
 	
 	$ roslaunch robot_gazebo willow_garage_teleop.launch
 	
