@@ -9,7 +9,7 @@ TrajectoryPlannerROS:
    min_in_place_vel_theta: 0.5
 
    holonomic_robot: false
-   pdist_scale: 0.5
+   pdist_scale: 0.6
    gdist_scale: 0.8
    global_frame_id: odom_combined
    meter_scoring: true

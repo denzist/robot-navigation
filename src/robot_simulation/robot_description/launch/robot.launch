@@ -3,10 +3,6 @@
 	<param name="robot_description"
 		command="$(find xacro)/xacro.py '$(find robot_description)/urdf/robot.xacro'" />
 
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" >
-      <remap from="joint_states" to="/gazebo/joint_states" />
-    </node>
-
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_description)/launch/robot.rviz"/>
 
 </launch>

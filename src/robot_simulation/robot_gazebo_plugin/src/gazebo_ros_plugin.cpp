@@ -181,14 +181,9 @@ namespace gazebo
 
 
       double RotVel_lin = cmd_vel.linear.x / this->wheel_radius;
-      double RotVel_rot;
-      double b = 0.09433;
-      double k = 1.10655;
-      if(cmd_vel.angular.z > 0){
-        RotVel_rot = ((b + cmd_vel.angular.z*k)*this->wheel_sep / 2) / this->wheel_radius;
-      }else{
-        RotVel_rot = ((-b + cmd_vel.angular.z*k)*this->wheel_sep / 2) / this->wheel_radius;
-      }
+      double RotVel_rot = 0.0;
+      double k = 1.26402;
+      RotVel_rot = cmd_vel.angular.z*k*this->wheel_sep / 2 / this->wheel_radius;
       //double RotVel_rot = (cmd_vel.angular.z * this->wheel_sep / 2) / this->wheel_radius;
 
       for (int i = 0; i < NUM_JOINTS; i++)

@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-	<node pkg="gmapping" type="slam_gmapping" name="robot_gmapping">
+	<node pkg="gmapping" type="slam_gmapping" name="robot_gmapping" output="screen">
 		<remap from="scan" to="/gazebo/laser_scan" />
-		<param name="odom_frame" value="/odom"/>
+		<param name="odom_frame" value="odom_combined"/>
+		<param name="base_frame" value="/base_link"/>
     	<param name="map_update_interval" value="0.1"/>
     	<param name="maxUrange" value="30.0"/>
   	</node>

@@ -12,7 +12,7 @@ TrajectoryPlannerROS:
    pdist_scale: 0.5
    gdist_scale: 0.8
    global_frame_id: odom_combined
-   meter_scoring: false
+   meter_scoring: true
    dwa: true
 
    vx_samples: 10
