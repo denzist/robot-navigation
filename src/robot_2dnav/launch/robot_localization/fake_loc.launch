@@ -3,7 +3,7 @@
   <master auto="start"/>
 
   <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find robot_2dnav)/map/map.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find robot_2dnav)/map/willow_garage_map/map.yaml"/>
 
   <!--- Run fake AMCL -->
   <node name="fake_localizaton" type="fake_localization" pkg="fake_localization">
