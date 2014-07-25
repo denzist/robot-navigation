@@ -7,7 +7,7 @@
   <arg name="debug" default="false"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find robot_gazebo)/worlds/willow_garage.world"/>
+    <arg name="world_name" value="$(find robot_gazebo)/worlds/simple.world"/>
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
     <arg name="paused" value="$(arg paused)"/>
@@ -21,7 +21,6 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
 	   args="-urdf -model robot -param robot_description -x 0 -y 0 -z 0.5"/>
 
-  
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" >
      <remap from="joint_states" to="/gazebo/joint_states" />
   </node>
