@@ -178,17 +178,21 @@
 		<turnGravityOff>false</turnGravityOff>
 	</gazebo>
 
-	<!--diff drive contr-->
+	<!--diff drive controller-->
 	<gazebo>
-		<plugin name="robot_controller" filename="libgazebo_ros_plugin.so">
+		<plugin name="robot_controller" filename="libdiff_drive_gazebo_plugin.so">
 			<cmd_vel_topic_name>cmd_vel</cmd_vel_topic_name>
 			<odom_topic_name>odom</odom_topic_name>
 			<joint_states_topic_name>joint_states</joint_states_topic_name>
-			<left_front_wheel_joint>left_front_wheel_joint</left_front_wheel_joint>
-			<left_rear_wheel_joint>left_rear_wheel_joint</left_rear_wheel_joint>
-			<right_front_wheel_joint>right_front_wheel_joint</right_front_wheel_joint>
-			<right_rear_wheel_joint>right_rear_wheel_joint</right_rear_wheel_joint>
+			<left_wheel_0>left_front_wheel_joint</left_wheel_0>
+			<left_wheel_1>left_rear_wheel_joint</left_wheel_1>
+			<right_wheel_2>right_front_wheel_joint</right_wheel_2>
+			<right_wheel_3>right_rear_wheel_joint</right_wheel_3>
 			<wheel_separation>${base_width + wheel_length}</wheel_separation>
+			<wheel_radius>0.1</wheel_radius>
+			<torque>10.0</torque>
+			<num_joints>4</num_joints>
+
 		</plugin>
 	</gazebo>
 

@@ -17,8 +17,8 @@ find_package(gazebo REQUIRED)
 catkin_package()
 
 link_directories(${GAZEBO_LIBRARY_DIRS})
-include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
+include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
-add_library(gazebo_ros_plugin src/gazebo_ros_plugin.cpp)
-target_link_libraries(gazebo_ros_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_library(diff_drive_gazebo_plugin src/diff_drive_gazebo_plugin.cpp)
+target_link_libraries(diff_drive_gazebo_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
