@@ -12,6 +12,10 @@ catkin_package()
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(com src/com.cpp)
+add_library(com src/com.cpp)
 
 target_link_libraries(com ${roscpp_LIBRARIES})
+
+add_executable(key_teleop src/key_teleop.cpp)
+
+target_link_libraries(key_teleop ${roscpp_LIBRARIES} com)
