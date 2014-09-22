@@ -29,7 +29,6 @@ private:
 
 RobotJoyTeleop::RobotJoyTeleop()
 {
-
   node.param("/max_lin_vel", this->max_vel_x, 1.3);
   node.param("/max_ang_vel", this->max_rotational_vel, 1.0);
   node.param<std::string>("/cmd_topic", this->cmd_topic, "/gazebo/cmd_vel");
@@ -50,7 +49,7 @@ RobotJoyTeleop::RobotJoyTeleop()
 
   this->joy_sub = this->node.subscribe<sensor_msgs::Joy>("joy", 10, &RobotJoyTeleop::joyCallback, this);
 
-  this->verification_pub = this->node.advertise<std_msgs::Int32>("/teleop_veification", 1);
+  this->verification_pub = this->node.advertise<std_msgs::Int32>("/teleop_verification", 1);
 
 }
 

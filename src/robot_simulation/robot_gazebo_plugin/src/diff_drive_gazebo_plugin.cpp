@@ -20,18 +20,18 @@ namespace gazebo
 
     void DiffDrivePlugin::parseSDF(sdf::ElementPtr sdf){
     	cmd_vel_topic_ = sdf->Get<std::string>("cmd_vel_topic_name");
-      	if(cmd_vel_topic_ == "")
-      		cmd_vel_topic_ = "cmd_vel";
-      	odom_topic_ = sdf->Get<std::string>("odom_topic_name");
-      	if(odom_topic_ == "")
-      	   	odom_topic_ = "odom";
-      	joint_states_topic_ = sdf->Get<std::string>("joint_states_topic_name"); 
-      	if(joint_states_topic_ == "")
-      		joint_states_topic_= "joint_states";
-      	//parse joints
-      	r_num_joints_ = sdf->Get<int>("num_joints");
-      	if(r_num_joints_ == 0)
-      		r_num_joints_ = 4;
+    	if(cmd_vel_topic_ == "")
+    		cmd_vel_topic_ = "cmd_vel";
+    	odom_topic_ = sdf->Get<std::string>("odom_topic_name");
+    	if(odom_topic_ == "")
+    	   	odom_topic_ = "odom";
+    	joint_states_topic_ = sdf->Get<std::string>("joint_states_topic_name"); 
+    	if(joint_states_topic_ == "")
+    		joint_states_topic_= "joint_states";
+    	//parse joints
+    	r_num_joints_ = sdf->Get<int>("num_joints");
+    	if(r_num_joints_ == 0)
+    		r_num_joints_ = 4;
     	r_joint_states_.name.resize(r_num_joints_);
     	r_joint_states_.position.resize(r_num_joints_);
     	r_joint_states_.velocity.resize(r_num_joints_);
@@ -95,7 +95,7 @@ namespace gazebo
     	r_vx_ = 0.0;
     	r_vy_ = 0.0;
     	r_vth_ = 0.0;
-		*/
+		  */
     	node_ = new ros::NodeHandle("~");
     	cmd_vel_sub_ = node_->subscribe(cmd_vel_topic_, 1,
     		&DiffDrivePlugin::callbackCmdVel, this);
@@ -124,16 +124,14 @@ namespace gazebo
     {
     	
     	double vel_lin = cmd_vel.linear.x / r_w_rad_;
-      	double k = 1.26402;
-      	double vel_ang = cmd_vel.angular.z*k*r_w_sep_ / 2 / r_w_rad_;
-      	for (int i = 0; i < r_num_joints_; i++)
-        	r_joints_[i]->SetMaxForce(0, r_w_torq_);
-        
-      	for (int i = 0; i < r_num_joints_/2; i++)
-      		r_joints_[i]->SetVelocity(0, vel_lin - vel_ang);
-
-      	for (int i = r_num_joints_/2; i < r_num_joints_; i++)
-      		r_joints_[i]->SetVelocity(0, vel_lin + vel_ang);
+      double k = 1.26402;
+      double vel_ang = cmd_vel.angular.z*k*r_w_sep_ / 2 / r_w_rad_;
+      for (int i = 0; i < r_num_joints_; i++)
+       	r_joints_[i]->SetMaxForce(0, r_w_torq_);
+      for (int i = 0; i < r_num_joints_/2; i++)
+      	r_joints_[i]->SetVelocity(0, vel_lin - vel_ang);
+     	for (int i = r_num_joints_/2; i < r_num_joints_; i++)
+     		r_joints_[i]->SetVelocity(0, vel_lin + vel_ang);
 		
     }
 /*
@@ -170,15 +168,13 @@ namespace gazebo
 */
     void DiffDrivePlugin::publishJointStates()
     {
-    	common::Time current_t = world_->GetSimTime();
-      	r_joint_states_.header.stamp.sec = current_t.sec;
-      	r_joint_states_.header.stamp.nsec = current_t.nsec;
-
-      	for (int i = 0; i < r_num_joints_; ++i)
-      	{
-        	r_joint_states_.position[i] = r_joints_[i]->GetAngle(0).Radian();
-        	r_joint_states_.velocity[i] = r_joints_[i]->GetVelocity(0);
-      	}
-      	joint_state_pub_.publish(r_joint_states_);
+      common::Time current_t = world_->GetSimTime();
+      r_joint_states_.header.stamp.sec = current_t.sec;
+      r_joint_states_.header.stamp.nsec = current_t.nsec;
+     	for (int i = 0; i < r_num_joints_; ++i){
+        r_joint_states_.position[i] = r_joints_[i]->GetAngle(0).Radian();
+        r_joint_states_.velocity[i] = r_joints_[i]->GetVelocity(0);
+      }
+      joint_state_pub_.publish(r_joint_states_);
     }
 }

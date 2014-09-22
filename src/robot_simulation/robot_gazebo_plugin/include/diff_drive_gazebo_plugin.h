@@ -17,7 +17,6 @@ namespace gazebo
 {   
   class DiffDrivePlugin : public ModelPlugin
   {
-
   public:
     DiffDrivePlugin();
     ~DiffDrivePlugin();

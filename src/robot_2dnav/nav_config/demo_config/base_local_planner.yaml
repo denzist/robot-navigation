@@ -11,7 +11,7 @@ TrajectoryPlannerROS:
    holonomic_robot: false
    pdist_scale: 0.5
    gdist_scale: 0.8
-   global_frame_id: odom_combined
+   global_frame_id: /map
    meter_scoring: true
    dwa: true
 

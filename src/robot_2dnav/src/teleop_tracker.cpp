@@ -1,8 +1,4 @@
-#include <ros/ros.h>
-#include <tf/transform_listener.h>
-#include <vector>
-#include <robot_msgs/Goal.h>
-#include <std_msgs/Int32.h>
+#include "autonomous_return.h"
 
 
 #define _INACTIVE 0
