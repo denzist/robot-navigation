@@ -30,8 +30,8 @@ int main(int argc, char** argv)
 			double ang_vel = (*vel_ptr).angular.z;
 			effort_commands[RIGHT] += (short)(lin_vel * effort_lin_k);
 			effort_commands[LEFT] += (short)(lin_vel * effort_lin_k);
-			effort_commands[RIGHT] += (short)(-1 * ang_vel * effort_ang_k);
-			effort_commands[LEFT] += (short)(ang_vel * effort_ang_k);
+			effort_commands[RIGHT] += (short)(ang_vel * effort_ang_k);
+			effort_commands[LEFT] += (short)(-1 * ang_vel * effort_ang_k);
 		}
 		ROS_INFO_STREAM("effort commands right = " << effort_commands[RIGHT] << 
 			" left = " << effort_commands[LEFT]);

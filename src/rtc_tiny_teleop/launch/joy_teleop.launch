@@ -9,5 +9,5 @@
 
   <node pkg="rtc_tiny_teleop" type="joy_teleop" name="joy_teleop" output="screen"/>
 
-  <node pkg="rtc_tiny_teleop" type="rtc_tiny_controller" name="rtc_tiny_controller" output="screen"/>
+  <!--node pkg="rtc_tiny_teleop" type="rtc_tiny_controller" name="rtc_tiny_controller" output="screen"/-->
 </launch>
