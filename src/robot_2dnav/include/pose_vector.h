@@ -138,7 +138,7 @@ std::string PoseVector<T>::toString(const T& pose)
 {
 	geometry_msgs::Point p = convert<T, geometry_msgs::Point>(pose);
 	std::stringstream ss;
-	ss << "x = " << p.x << "y =" << p.y << "z = " << p.z;
+	ss << "x = " << p.x << "y = " << p.y << " z = " << p.z;
 	return ss.str();
 }
 
@@ -146,10 +146,14 @@ std::string PoseVector<T>::toString(const T& pose)
 template<class T>
 std::string PoseVector<T>::toString()
 {
-	geometry_msgs::Point p = convert<T, geometry_msgs::Point>(this->back());
-	std::stringstream ss;
-	ss << "x = " << p.x << "y =" << p.y << "z = " << p.z;
-	return ss.str();
+	if(!this->empty())
+	{
+		geometry_msgs::Point p = convert<T, geometry_msgs::Point>(this->back());
+		std::stringstream ss;
+		ss << "x = " << p.x << " y =" << p.y << " z = " << p.z;
+		return ss.str();
+	}
+	return "The PoseVector is empty.";
 }
 
 template<class T>

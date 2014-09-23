@@ -7,7 +7,6 @@ int main(int argc, char** argv)
 	ros::Rate rate(100.0);
 	AutonomousReturnSystem arrs;
   	while(node.ok()){
-    	ros::spinOnce();
     	arrs.spinOnce();
     	rate.sleep();
   	}
