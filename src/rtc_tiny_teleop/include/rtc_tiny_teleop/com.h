@@ -1,6 +1,7 @@
 #ifndef COM_H_
 #define COM_H_
 
+
 #include <unistd.h>  /* Объявления стандартных функций UNIX write, read, close, usleep*/
 #include <fcntl.h>   /* Объявления управления файлами */
 #include <termios.h> /* Объявления управления POSIX-терминалом */

@@ -1,4 +1,4 @@
-#include "rtk_tiny_teleop/com.h"
+#include "rtc_tiny_teleop/com.h"
 
 int main(void)
 {

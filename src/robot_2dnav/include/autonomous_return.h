@@ -17,7 +17,7 @@ private:
 	void sendGoal();
 	inline tf::StampedTransform getLastTF();
 	ros::NodeHandle* node_;
-	boost::shared_ptr<std_msgs::Int32 const> shared_ptr_;
+	boost::shared_ptr<std_msgs::Int32 const> teleop_verification_ptr_;
 	tf::TransformListener tf_listener;
 };
 
@@ -46,8 +46,8 @@ void AutonomousReturnSystem::spinOnce()
 	actionlib::SimpleClientGoalState move_base_client_state = actionlib::SimpleClientGoalState::PENDING;
 	if(GoalController::isStarted())
 		move_base_client_state = move_base_client_->getState();
-	shared_ptr_ = ros::topic::waitForMessage<std_msgs::Int32>("/teleop_verification", ros::Duration(1.0));
-	if(shared_ptr_ != NULL)
+	teleop_verification_ptr_ = ros::topic::waitForMessage<std_msgs::Int32>("/teleop_verification", ros::Duration(1.0));
+	if(teleop_verification_ptr_ != NULL)
 	{
 		// check if move_base is active
 		//TODO need to check

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>rtk_tiny_teleop</name>
+  <name>rtc_tiny_teleop</name>
   <version>0.0.0</version>
-  <description>The rtk_tiny_teleop package</description>
+  <description>The rtc_tiny_teleop package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->

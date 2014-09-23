@@ -1,8 +1,6 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
-#include <pluginlib/class_list_macros.h>
 #include <geometry_msgs/Twist.h>
-#include <ros/time.h>
 #include <std_msgs/Int32.h>
 
 
@@ -14,57 +12,46 @@ public:
 private:
   void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
   
-  ros::NodeHandle node;
+  ros::NodeHandle* nh_;
 
-  double max_vel_x, max_rotational_vel;
-  double speed_multiplier;
-  std::string cmd_topic;
+  double max_vel_x_;
+  double max_rotational_vel_;
+  double speed_multiplier_;
+  std::string cmd_topic_;
 
-  ros::Publisher vel_pub;
-  ros::Publisher verification_pub;
-  ros::Subscriber joy_sub;
-  
+  ros::Publisher vel_pub_;
+  ros::Publisher verification_pub_;
+  ros::Subscriber joy_sub_;
 };
 
 
-RobotJoyTeleop::RobotJoyTeleop()
+RobotJoyTeleop::RobotJoyTeleop():
+  max_vel_x_(1.3),
+  max_rotational_vel_(1.0),
+  cmd_topic_("/gazebo/cmd_vel")
 {
-  node.param("/max_lin_vel", this->max_vel_x, 1.3);
-  node.param("/max_ang_vel", this->max_rotational_vel, 1.0);
-  node.param<std::string>("/cmd_topic", this->cmd_topic, "/gazebo/cmd_vel");
-  if (node.hasParam("/cmd_topic"))
-  {
-    ROS_INFO("No param named 'cmd_topic'");
-  }
-  if (node.hasParam("/max_lin_vel"))
-  {
-    ROS_INFO("No param named 'max_lin_vel'");
-  }
-  if (node.hasParam("/max_ang_vel"))
-  {
-    ROS_INFO("No param named 'max_ang_vel'");
-  }
+  nh_ = new ros::NodeHandle("~");
+  nh_->param("/max_lin_vel", max_vel_x_, max_vel_x_);
+  nh_->param("/max_ang_vel", max_rotational_vel_, max_rotational_vel_);
+  nh_->param<std::string>("/cmd_topic", cmd_topic_, cmd_topic_);
 
-  this->vel_pub = this->node.advertise<geometry_msgs::Twist>(this->cmd_topic, 1);
-
-  this->joy_sub = this->node.subscribe<sensor_msgs::Joy>("joy", 10, &RobotJoyTeleop::joyCallback, this);
-
-  this->verification_pub = this->node.advertise<std_msgs::Int32>("/teleop_verification", 1);
-
+  vel_pub_ = nh_->advertise<geometry_msgs::Twist>("/gazebo/cmd_vel", 1);
+  joy_sub_ = nh_->subscribe<sensor_msgs::Joy>("/joy", 10, &RobotJoyTeleop::joyCallback, this);
+  verification_pub_ = nh_->advertise<std_msgs::Int32>("/teleop_verification", 1);
 }
 
 void RobotJoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist vel;
-  speed_multiplier = 1.0;
+  speed_multiplier_ = 1.0;
   // check if cross is used for steering
-  vel.linear.x = max_vel_x * joy->axes[1] * speed_multiplier;
-  vel.angular.z = max_rotational_vel * joy->axes[0] * speed_multiplier;
-  vel_pub.publish(vel);
+  vel.linear.x = max_vel_x_ * joy->axes[1] * speed_multiplier_;
+  vel.angular.z = max_rotational_vel_ * joy->axes[0] * speed_multiplier_;
+  vel_pub_.publish(vel);
 
   std_msgs::Int32 msg;
   msg.data = 1;
-  this->verification_pub.publish(msg);
+  verification_pub_.publish(msg);
 }
 
 
@@ -72,7 +59,6 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "joy_teleop");
   RobotJoyTeleop robot_joy_teleop;
-
   ros::spin();
 }
 
