@@ -46,7 +46,7 @@ PoseVector<T>::PoseVector():
 	std::vector<T>(),
 	area_size_(3.0),
 	area_size_delta_(0.2),
-	max_area_size_(area_size_delta_)
+	max_area_size_(area_size_ + area_size_delta_)
 {
 
 }
